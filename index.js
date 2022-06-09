@@ -25,7 +25,19 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+app.get("/api/whoami", (req, res) => {
+  res.json({
+    ipaddress: req.ip,
+    language: req.get('Accept-Language'),
+    software: req.headers["user-agent"]
+  });
+})
 
+//handling undefined paths
+app.get("*", (req, res) => {
+   res.write("Not Found");
+   res.end();
+})
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT || 3000, function () {
